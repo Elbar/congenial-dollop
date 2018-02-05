@@ -1,6 +1,6 @@
 from django.http import HttpResponse
+from django import forms
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
-
+def login(request):
+    return HttpResponse('login: <input/> password: <input/>')
