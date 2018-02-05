@@ -22,7 +22,7 @@ class JournalArticle(Document):
 
 
 class Video(Document):
-    videoUrl = models.CharField(ma_length=150)
+    videoUrl = models.CharField(max_length=150)
 
 
 class Book(Document):
