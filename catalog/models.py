@@ -1,7 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import (
-    AbstractUser
-)
+
 import uuid # Required for unique book instances
 # Create your models here.
 class Book(models.Model):
@@ -33,10 +31,3 @@ class BookInstance(models.Model):
 
     status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='m', help_text='Book availability')
 
-
-class MyUser(AbstractUser):
-    libraryCard = models.CharField(max_length=200)
-
-
-class Librarian(models.Model):
-    type = models.OneToOneField('MyUser', on_delete='DO_NOTHING')
