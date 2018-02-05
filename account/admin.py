@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import MyUser, Librarian
+from .models import User, Librarian, Patron
 from django.contrib.auth.forms import UserChangeForm
 
 # Register your models here.
@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserChangeForm
 
 class MyUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
-        model = MyUser
+        model = User
 
 
 class MyUserAdmin(UserAdmin):
@@ -19,5 +19,6 @@ class MyUserAdmin(UserAdmin):
     )
 
 
-admin.site.register(MyUser, MyUserAdmin)
+admin.site.register(User, MyUserAdmin)
+admin.site.register(Patron)
 admin.site.register(Librarian)
