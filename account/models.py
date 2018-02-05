@@ -9,4 +9,4 @@ class MyUser(AbstractUser):
 
 
 class Librarian(models.Model):
-    type = models.OneToOneField('MyUser', on_delete='DO_NOTHING')
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE, primary_key=True)
