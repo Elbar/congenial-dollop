@@ -106,3 +106,6 @@ catalog/migrations/0001_initial.py
 db.sqlite3
 
 .idea/workspace.xml
+db.sqlite3
+catalog/migrations/0001_initial.py
+account/migrations/0001_initial.py
