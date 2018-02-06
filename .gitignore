@@ -99,5 +99,11 @@ ENV/
 .mypy_cache/
 
 .idea/
+account/migrations/0002_faculty_instructor_professor_student_ta.py
+catalog/migrations/0001_initial.py
+catalog/migrations/0001_initial.py
+catalog/migrations/0001_initial.py
+db.sqlite3
+
 .idea/workspace.xml
 .idea/workspace.xml

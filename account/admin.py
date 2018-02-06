@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Librarian, Patron
+from .models import User, Librarian, Patron, Student, Faculty, Professor, TA, Instructor
 from django.contrib.auth.forms import UserChangeForm
 
 # Register your models here.
@@ -22,3 +22,8 @@ class MyUserAdmin(UserAdmin):
 admin.site.register(User, MyUserAdmin)
 admin.site.register(Patron)
 admin.site.register(Librarian)
+admin.site.register(Student)
+admin.site.register(Faculty)
+admin.site.register(Professor)
+admin.site.register(TA)
+admin.site.register(Instructor)
