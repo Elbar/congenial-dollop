@@ -6,28 +6,52 @@ from django.contrib.auth.forms import UserChangeForm
 # Register your models here.
 
 
-class MyUserChangeForm(UserChangeForm):
+class BaseUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = User
 
 
-class MyUserAdmin(UserAdmin):
-    form = MyUserChangeForm
+class BaseUserAdmin(UserAdmin):
+    form = BaseUserChangeForm
 
     fieldsets = UserAdmin.fieldsets + (
             (None, {'fields': ('libraryCard',)}),
     )
 
 
-class MyLibrarianAdmin(MyUserAdmin):
+class LibrarianAdmin(BaseUserAdmin):
     pass
 
 
-admin.site.register(User, MyUserAdmin)
-admin.site.register(Patron)
-admin.site.register(Librarian, MyLibrarianAdmin)
-admin.site.register(Student)
-admin.site.register(Faculty)
-admin.site.register(Professor)
-admin.site.register(TA)
-admin.site.register(Instructor)
+class PatronAdmin(BaseUserAdmin):
+    pass
+
+
+class StudentAdmin(BaseUserAdmin):
+    pass
+
+
+class FacultyAdmin(BaseUserAdmin):
+    pass
+
+
+class ProfessorAdmin(BaseUserAdmin):
+    pass
+
+
+class TAAdmin(BaseUserAdmin):
+    pass
+
+
+class InstructorAdmin(BaseUserAdmin):
+    pass
+
+
+admin.site.register(User, BaseUserAdmin)
+admin.site.register(Patron, PatronAdmin)
+admin.site.register(Librarian, LibrarianAdmin)
+admin.site.register(Student, StudentAdmin)
+admin.site.register(Faculty, FacultyAdmin)
+admin.site.register(Professor, ProfessorAdmin)
+admin.site.register(TA, TAAdmin)
+admin.site.register(Instructor, InstructorAdmin)
