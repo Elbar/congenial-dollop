@@ -7,46 +7,42 @@ class User(AbstractUser):
 
 
 class Librarian(User):
-    # user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-
-    def __str__(self):
-        return self.user.first_name + " " + self.user.last_name
-
     class Meta:
         verbose_name = 'Librarian'
         verbose_name_plural = 'Librarians'
 
 
-class Patron(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-
-    def __str__(self):
-        return self.user.first_name + " " + self.user.last_name
-
+class Patron(User):
     class Meta:
-        # verbose_name = 'Patron'
+        verbose_name = 'Patron'
         verbose_name_plural = 'Patrons'
 
 
-class Student(models.Model):
-    user = models.OneToOneField(Patron, on_delete=models.CASCADE, primary_key=True)
+class Student(Patron):
+    class Meta:
+        verbose_name = 'Student'
+        verbose_name_plural = 'Students'
 
 
-class Faculty(models.Model):
-    user = models.OneToOneField(Patron, on_delete=models.CASCADE, primary_key=True)
-
+class Faculty(Patron):
     class Meta:
         verbose_name = 'Faculty'
         verbose_name_plural = 'Faculties'
 
 
-class Professor(models.Model):
-    user = models.OneToOneField(Faculty, on_delete=models.CASCADE, primary_key=True)
+class Professor(Faculty):
+    class Meta:
+        verbose_name = 'Professor'
+        verbose_name_plural = 'Professors'
 
 
-class TA(models.Model):
-    user = models.OneToOneField(Faculty, on_delete=models.CASCADE, primary_key=True)
+class TA(Faculty):
+    class Meta:
+        verbose_name = 'Teaching Assistant'
+        verbose_name_plural = 'Teaching Assistants'
 
 
-class Instructor(models.Model):
-    user = models.OneToOneField(Faculty, on_delete=models.CASCADE, primary_key=True)
+class Instructor(Faculty):
+    class Meta:
+        verbose_name = 'Instructor'
+        verbose_name_plural = 'Instructors'
