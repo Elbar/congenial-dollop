@@ -18,3 +18,23 @@ class Patron(models.Model):
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
+
+
+class Student(models.Model):
+    user = models.OneToOneField(Patron, on_delete=models.CASCADE, primary_key=True)
+
+
+class Faculty(models.Model):
+    user = models.OneToOneField(Patron, on_delete=models.CASCADE, primary_key=True)
+
+
+class Professor(models.Model):
+    user = models.OneToOneField(Faculty, on_delete=models.CASCADE, primary_key=True)
+
+
+class TA(models.Model):
+    user = models.OneToOneField(Faculty, on_delete=models.CASCADE, primary_key=True)
+
+
+class Instructor(models.Model):
+    user = models.OneToOneField(Faculty, on_delete=models.CASCADE, primary_key=True)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Document, JournalArticle, Video, Book
+from .models import Document, JournalArticle, Video, Book, Checkout
 
 # Register your models here.
 
@@ -27,3 +27,7 @@ class VideoAdmin(DocumentAdmin):
 class BookAdmin(DocumentAdmin):
     pass
 
+
+@admin.register(Checkout)
+class CheckoutAdmin(admin.ModelAdmin):
+    pass

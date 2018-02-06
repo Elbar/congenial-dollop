@@ -1,5 +1,7 @@
 from django.db import models
+from django.urls import reverse
 
+from account.models import User
 import uuid # Required for unique book instances
 # Create your models here.
 
@@ -28,3 +30,12 @@ class Video(Document):
 class Book(Document):
     isbn = models.CharField(max_length=50)
 
+
+class Checkout(models.Model):
+    document = models.OneToOneField(Document, on_delete=models.DO_NOTHING)
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
+    since = models.DateField()
+    until = models.DateField()
+
+    def __str__(self):
+        return self.document.title + " checked out by " + self.user.first_name + " " + self.user.last_name
