@@ -29,6 +29,7 @@ class Video(Document):
 
 class Book(Document):
     isbn = models.CharField(max_length=50)
+    bestseller = models.BooleanField()
 
 
 class Checkout(models.Model):
