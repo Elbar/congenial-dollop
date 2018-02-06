@@ -19,9 +19,13 @@ class MyUserAdmin(UserAdmin):
     )
 
 
+class MyLibrarianAdmin(MyUserAdmin):
+    pass
+
+
 admin.site.register(User, MyUserAdmin)
 admin.site.register(Patron)
-admin.site.register(Librarian)
+admin.site.register(Librarian, MyLibrarianAdmin)
 admin.site.register(Student)
 admin.site.register(Faculty)
 admin.site.register(Professor)
