@@ -66,12 +66,12 @@ def book_detail_view(request, pk):
 
 
 def do_checkout(user, document):
-    if document.numberOfCopies > 1:
+    if document.copies_count > 1:
         try:
             Checkout.objects.get(user=user, document=document)
             print("You can't checkout")
         except Checkout.DoesNotExist:
-            document.numberOfCopies = document.numberOfCopies - 1
+            document.copies_count = document.copies_count - 1
             document.save()
             new_checkout = Checkout(user=user, document=document)
             new_checkout.save()
