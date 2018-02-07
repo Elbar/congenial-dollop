@@ -13,7 +13,7 @@ class Document(models.Model):
     author = models.CharField(max_length=50)
     release = models.DateField(auto_now=True)
     edition = models.IntegerField(default=1)
-    price = models.DecimalField(default=0, max_digits=100000, decimal_places=2)
+    price = models.DecimalField(max_digits=100000, decimal_places=2)
     thumbnailUrl = models.CharField(max_length=150)
     copies_count = models.IntegerField(default=1)
 
