@@ -5,30 +5,50 @@ from .models import Book, Checkout, Document
 from account.models import User, Patron, Librarian
 
 
-def index(request):
-    """
-    View function for home page of site.
-    """
-    # Render the HTML template index.html with the data in the context variable
-    return render(
-        request,
-        'index.html',
-        context={'books_count': Book.objects.all.count, 'checkouts_count': Checkout.objects.all.count},
-    )
-
-
 class BookListView(generic.ListView):
     model = Book
 
 
+def index(request):
+    """
+    View function for home page of site.
+    """
+
+    wipe_all_data()
+
+    tc_1()
+
+    # Render the HTML template index.html with the data in the context variable
+    return render(
+        request,
+        'index.html',
+        context={'books_count': Book.objects.all().count(), 'checkouts_count': Checkout.objects.all().count()},
+    )
+
+
+def tc_1():
+    log_tc('1')
+
+    book = Book(title="a_book", copies_count=2)
+    book.save()
+
+    patron = Patron.objects.create_user(username='patron', email='patron@lib.co', password='abc')
+    patron.save()
+
+    librarian = Librarian.objects.create_user(username='librarian', email='librarian@lib.co', password='abc')
+    librarian.save()
+
+    do_checkout(patron, book)
+
+
+def log_tc(name):
+    print('------------- test case ' + name + ' started ------------')
+
+
 def wipe_all_data():
-    Document.objects.all.delete
-    User.objects.all.delete
-    Checkout.objects.all.delete
-
-
-def print_counts():
-    print('books_count: ' + Book.objects.all.count + ' | checkouts_count: ' + Checkout.objects.all.count)
+    Document.objects.all().delete()
+    User.objects.all().delete()
+    Checkout.objects.all().delete()
 
 
 def book_detail_view(request, pk):
@@ -52,8 +72,8 @@ def do_checkout(user, document):
             print("You can't checkout")
         except Checkout.DoesNotExist:
             document.numberOfCopies = document.numberOfCopies - 1
-            document.save
+            document.save()
             new_checkout = Checkout(user=user, document=document)
-            new_checkout.save
+            new_checkout.save()
     else:
         print("Check out is not possible. There no available copies")
