@@ -17,8 +17,7 @@ def index(request):
     librarian = Librarian.objects.get()
     document = Document.objects.get()
 
-    checkout(patron,document)
-    num_books = Book.objects.all().count()
+    do_checkout(patron,document)
     num_instances = Checkout.objects.all().count()
     # Render the HTML template index.html with the data in the context variable
     return render(
@@ -30,6 +29,10 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
+
+
+def num_books():
+    return Book.objects.all().count()
 
 
 def book_detail_view(request, pk):
@@ -46,7 +49,7 @@ def book_detail_view(request, pk):
     )
 
 
-def checkout(user, document):
+def do_checkout(user, document):
     if document.numberOfCopies > 1:
         try:
             Checkout.objects.get(user=user, document=document)

@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from account.models import User
+from account.models import User, Faculty
 import uuid # Required for unique book instances
 
 from datetime import datetime, timedelta
@@ -37,8 +37,10 @@ class Book(Document):
     isbn = models.CharField(max_length=50)
     bestseller = models.BooleanField(default=False)
 
-    def delta(self):
-        if self.bestseller:
+    def checkout_duration(self, user):
+        if user in Faculty.__dict__:
+            return timedelta(28)
+        elif self.bestseller:
             return timedelta(14)
         else:
             return timedelta(21)
@@ -48,7 +50,7 @@ class Checkout(models.Model):
     document = models.OneToOneField(Document, on_delete=models.DO_NOTHING)
     user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
     since = models.DateField(auto_now=True)
-    until = models.DateField(default=datetime.now()+Book(document).delta())
+    until = models.DateField(default=datetime.now()+Book(document).checkout_duration(user))
 
     def __str__(self):
         return self.document.title + " checked out by " + self.user.first_name + " " + self.user.last_name
