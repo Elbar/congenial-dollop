@@ -4,6 +4,11 @@ from django.views import generic
 from .models import Book, Checkout, Document
 from account.models import User, Patron, Librarian
 
+
+class BookListView(generic.ListView):
+    model = Book
+
+
 def index(request):
     """
     View function for home page of site.
@@ -11,16 +16,42 @@ def index(request):
     # Generate counts of some of the main objects
     num_books = Book.objects.all().count()
     num_instances = User.objects.all().count()
+
+    wipe_all_data()
+
+    tc_1()
+
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,
         'index.html',
-        context={'num_books': num_books, 'num_instances': num_instances},
+        context={'books_count': Book.objects.all().count(), 'checkouts_count': Checkout.objects.all().count()},
     )
 
 
-class BookListView(generic.ListView):
-    model = Book
+def tc_1():
+    log_tc('1')
+
+    book = Book(title="a_book", copies_count=2)
+    book.save()
+
+    patron = Patron.objects.create_user(username='patron', email='patron@lib.co', password='abc')
+    patron.save()
+
+    librarian = Librarian.objects.create_user(username='librarian', email='librarian@lib.co', password='abc')
+    librarian.save()
+
+    do_checkout(patron, book)
+
+
+def log_tc(name):
+    print('------------- test case ' + name + ' started ------------')
+
+
+def wipe_all_data():
+    Document.objects.all().delete()
+    User.objects.all().delete()
+    Checkout.objects.all().delete()
 
 
 def book_detail_view(request, pk):
@@ -33,11 +64,11 @@ def book_detail_view(request, pk):
     return render(
         request,
         'catalog/book_detail.html',
-        context={'book': book_id, 'checkout':checkout, 'is_librarian': is_librarian}
+        context={'book': book_id, 'checkout': checkout, 'is_librarian': is_librarian}
     )
 
 
-def checkout(user, document):
+def do_checkout(user, document):
     if document.numberOfCopies > 1:
         try:
             Checkout.objects.get(user=user, document=document)
