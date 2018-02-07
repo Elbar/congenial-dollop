@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views import generic
 from .models import Book, Checkout, Document
 from account.models import User, Patron, Librarian
+from django.core.management import call_command
 
 
 class BookListView(generic.ListView):
@@ -13,9 +14,6 @@ def index(request):
     """
     View function for home page of site.
     """
-    # Generate counts of some of the main objects
-    num_books = Book.objects.all().count()
-    num_instances = User.objects.all().count()
 
     wipe_all_data()
 
@@ -25,7 +23,9 @@ def index(request):
     return render(
         request,
         'index.html',
-        context={'books_count': Book.objects.all().count(), 'checkouts_count': Checkout.objects.all().count()},
+        context={'books_count': Book.objects.all().count(),
+                 'users_count': User.objects.all().count(),
+                 'checkouts_count': Checkout.objects.all().count()},
     )
 
 
@@ -34,6 +34,8 @@ def tc_1():
 
     book = Book(title="a_book", copies_count=2)
     book.save()
+
+    log_stats()
 
     patron = Patron.objects.create_user(username='patron', email='patron@lib.co', password='abc')
     patron.save()
@@ -44,14 +46,18 @@ def tc_1():
     do_checkout(patron, book)
 
 
+def log_stats():
+    print('books_count: ' + str(Book.objects.all().count()) +
+          ' | users_count: ' + str(User.objects.all().count()) +
+          ' | checkouts_count: ' + str(Checkout.objects.all().count()))
+
+
 def log_tc(name):
     print('------------- test case ' + name + ' started ------------')
 
 
 def wipe_all_data():
-    Document.objects.all().delete()
-    User.objects.all().delete()
-    Checkout.objects.all().delete()
+    call_command('flush', verbosity=0, interactive=False)
 
 
 def book_detail_view(request, pk):
