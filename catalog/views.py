@@ -9,17 +9,8 @@ def index(request):
     View function for home page of site.
     """
     # Generate counts of some of the main objects
-    patron = Patron.objects.create_user(username='john',
-                                        email='jlennon@beatles.com',
-                                        password='glass onion')
-    patron.save()
-    # patron = Patron.objects.get()
-    librarian = Librarian.objects.get()
-    document = Document.objects.get()
-
-    checkout(patron,document)
     num_books = Book.objects.all().count()
-    num_instances = Checkout.objects.all().count()
+    num_instances = User.objects.all().count()
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,

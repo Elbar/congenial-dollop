@@ -6,7 +6,7 @@
   <p><strong>Author:</strong> {{ book.author }}</p> <!-- author detail link not yet defined -->
   <p><strong>Release:</strong> {{ book.release }}</p>
   <p><strong>ISBN:</strong> {{ book.isbn }}</p>
-  <p><strong>Edition:</strong> {{ book.language }} {{ is_librarian }}</p>
+  <p><strong>Edition:</strong> {{ book.edition }}</p>
       {% if user.is_authenticated and is_librarian %}
           <p><strong>Checked out by:</strong> {{ checkout.user.first_name }} {{ checkout.user.last_name }}</p>
       {% endif %}
