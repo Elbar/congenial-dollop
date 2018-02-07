@@ -1,11 +1,7 @@
 from django.contrib import admin
-from .models import Document, JournalArticle, Video, Book, Checkout
+from .models import Document, JournalArticle, Video, Book, Checkout,Audio
 
 # Register your models here.
-
-# admin.site.register(Book)
-# admin.site.register(BookInstance)
-
 
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
@@ -20,6 +16,11 @@ class JournalArticleAdmin(DocumentAdmin):
 
 @admin.register(Video)
 class VideoAdmin(DocumentAdmin):
+    pass
+
+
+@admin.register(Audio)
+class AudioAdmin(DocumentAdmin):
     pass
 
 

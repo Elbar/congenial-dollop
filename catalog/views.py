@@ -1,16 +1,25 @@
 from django.http import Http404
 from django.shortcuts import render
 from django.views import generic
-from .models import Book, Checkout
+from .models import Book, Checkout, Document
+from account.models import User, Patron, Librarian
 
 def index(request):
     """
     View function for home page of site.
     """
     # Generate counts of some of the main objects
+    patron = Patron.objects.create_user(username='john',
+                                        email='jlennon@beatles.com',
+                                        password='glass onion')
+    patron.save()
+    # patron = Patron.objects.get()
+    librarian = Librarian.objects.get()
+    document = Document.objects.get()
+
+    checkout(patron,document)
     num_books = Book.objects.all().count()
     num_instances = Checkout.objects.all().count()
-
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,
@@ -30,7 +39,6 @@ def book_detail_view(request, pk):
         is_librarian = hasattr(request.user, 'librarian')
     except Book.DoesNotExist:
         raise Http404("Book does not exist")
-
     return render(
         request,
         'catalog/book_detail.html',
@@ -38,3 +46,15 @@ def book_detail_view(request, pk):
     )
 
 
+def checkout(user, document):
+    if document.numberOfCopies > 1:
+        try:
+            Checkout.objects.get(user=user, document=document)
+            print("You can't checkout")
+        except Checkout.DoesNotExist:
+            document.numberOfCopies = document.numberOfCopies - 1
+            document.save()
+            new_checkout = Checkout(user=user, document=document)
+            new_checkout.save()
+    else:
+        print("Check out is not possible. There no available copies")
