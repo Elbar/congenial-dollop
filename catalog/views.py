@@ -14,11 +14,11 @@ def index(request):
     """
     View function for home page of site.
     """
-
     wipe_all_data()
-
     tc_1()
 
+    num_books = Book.objects.all().count()
+    num_instances = User.objects.all().count()
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,
@@ -35,21 +35,22 @@ def tc_1():
     book = Book(title="a_book", copies_count=2)
     book.save()
 
-    log_stats()
+    log_stats('created book')
 
     patron = Patron.objects.create_user(username='patron', email='patron@lib.co', password='abc')
     patron.save()
 
-    librarian = Librarian.objects.create_user(username='librarian', email='librarian@lib.co', password='abc')
+    librarian = Librarian.objects.create(username='librarian', email='librarian@lib.co', password='1234567a', libraryCard='123')
     librarian.save()
 
     do_checkout(patron, book)
 
 
-def log_stats():
-    print('books_count: ' + str(Book.objects.all().count()) +
-          ' | users_count: ' + str(User.objects.all().count()) +
-          ' | checkouts_count: ' + str(Checkout.objects.all().count()))
+def log_stats(action):
+    print(action)
+    print('books_count: ' + str(Book.objects.all().count()))
+    print('users_count: ' + str(User.objects.all().count()))
+    print('checkouts_count: ' + str(Checkout.objects.all().count()))
 
 
 def log_tc(name):
