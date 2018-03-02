@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     libraryCard = models.CharField(max_length=200)
+    phone_number = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
 
 
 class Librarian(User):
