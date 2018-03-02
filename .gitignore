@@ -99,6 +99,3 @@ ENV/
 .mypy_cache/
 
 .idea/
-account/migrations/
-catalog/migrations/
-db.sqlite3
