@@ -37,10 +37,10 @@ class Book(Document):
     isbn = models.CharField(max_length=50)
     bestseller = models.BooleanField(default=False)
 
-    def checkout_duration(self, user):
+    def checkout_duration(self, user, document):
         if user in Faculty.__dict__:
             return timedelta(28)
-        elif self.bestseller:
+        elif self.bestseller and document in JournalArticle.__dict__ and document in Audio.__dict__ and document in Video.__dict__:
             return timedelta(14)
         else:
             return timedelta(21)
@@ -50,7 +50,7 @@ class Checkout(models.Model):
     document = models.OneToOneField(Document, on_delete=models.DO_NOTHING)
     user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
     since = models.DateField(auto_now=True)
-    until = models.DateField(default=datetime.now()+Book(document).checkout_duration(user))
+    until = models.DateField(default=datetime.now()+Book(document).checkout_duration(user, document))
 
     def __str__(self):
         return self.document.title + " checked out by " + self.user.first_name + " " + self.user.last_name
