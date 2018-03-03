@@ -25,6 +25,7 @@ def index(request):
                  'checkouts_count': Checkout.objects.all().count()},
     )
 
+
 def book_detail_view(request, pk):
     try:
         book_id = Book.objects.get(pk=pk)
