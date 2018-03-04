@@ -1,11 +1,10 @@
 from django.contrib import admin
-from .models import Document, JournalArticle, Video, Book, Checkout,Audio
+from .models import *
 
 
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
     list_display = ('title', 'author')
-# Register the Admin classes for BookInstance using the decorator
 
 
 @admin.register(JournalArticle)
@@ -31,3 +30,13 @@ class BookAdmin(DocumentAdmin):
 @admin.register(Checkout)
 class CheckoutAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Copy)
+class CopyAdmin(admin.ModelAdmin):
+    list_display = ('document', 'room', 'level')
+
+
+@admin.register(Reference)
+class ReferenceAdmin(admin.ModelAdmin):
+    list_display = ('document', 'room', 'level')

@@ -1,45 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  {% block title %}<title>Local Library</title>{% endblock %}
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block title %}<title>Local Library</title>{% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
-  <!-- Add additional CSS in static file -->
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Add additional CSS in static file -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base_list.css' %}">
+
 </head>
 
 <body>
 
-  <div class="container-fluid">
+<div class="container-fluid">
 
     <div class="row">
-      <div class="col-sm-2">
-      {% block sidebar %}
-      <ul class="sidebar-nav">
-{#          <li><a href="{% url 'index' %}">Home</a></li>#}
-{#          <li><a href="{% url 'books' %}">All books</a></li>#}
+        <div class="col-sm-2">
+            {% block sidebar %}
+                <ul class="sidebar-nav" style="padding-top: 100px">
 
-           {% if user.is_authenticated %}
-             <li>User: {{ user.get_username }}</li>
-             <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-           {% else %}
-             <li><a href="{% url 'login'%}">Login</a></li>
-           {% endif %}
-      </ul>
-     {% endblock %}
-      </div>
-      <div class="col-sm-10 ">
-      {% block content %}{% endblock %}
-      </div>
+                    {% if user.get_queryset == 'Librarian' %}
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'documents' %}">Documents</a></li>
+                        <ul>
+                            <li><a href="{% url 'books' %}">Books</a></li>
+                            <li><a href="{% url 'articles' %}">Articles</a></li>
+                        </ul>
+
+                        <li><a href="{% url 'checkouts' %}">Checkouts</a></li>
+                        <li><a href="{% url 'users' %}">Users</a></li>
+                    {% elif user.get_queryset == 'Patron' %}
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'documents' %}">Documents</a></li>
+                        <ul>
+                            <li><a href="{% url 'books' %}">Books</a></li>
+                            <li><a href="{% url 'articles' %}">Articles</a></li>
+                        </ul>
+
+                        <li><a href="{% url 'checkouts' %}">Checkouts</a></li>
+                    {% endif %}
+
+
+                    {% if user.is_authenticated %}
+                        <li>User: {{ user.get_username }}</li>
+                        <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+                    {% endif %}
+                </ul>
+            {% endblock %}
+        </div>
+        <div class="col-sm-10 " style="padding-top: 100px">
+            {% block content %}{% endblock %}
+        </div>
     </div>
 
-  </div>
+</div>
 </body>
 </html>

@@ -1,11 +1,18 @@
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    libraryCard = models.CharField(max_length=200)
     phone_number = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
+
+    def get_queryset(self):
+        if Patron.objects.filter(username=self.username).exists():
+            return 'Patron'
+        elif Librarian.objects.filter(username=self.username).exists():
+            return 'Librarian'
+        return 'User'
 
 
 class Librarian(User):

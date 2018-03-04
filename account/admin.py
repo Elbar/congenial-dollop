@@ -15,7 +15,7 @@ class BaseUserAdmin(UserAdmin):
     form = BaseUserChangeForm
 
     fieldsets = UserAdmin.fieldsets + (
-            (None, {'fields': ('libraryCard',)}),
+            (None, {'fields': ('phone_number', 'address')}),
     )
 
 

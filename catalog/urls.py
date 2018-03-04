@@ -4,8 +4,11 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url('/list/', views.base_list, name='base-list'),
-    url('/document/new/', views.create_document, name='document_new'),
-    url('books/', views.BookListView.as_view(), name='books'),
-    url('book/<int:pk>', views.book_detail_view, name='book-detail'),
+    url('/users/', views.users, name='users'),
+    url('/checkouts/', views.checkouts, name='checkouts'),
+    url('/document/new/', views.create_checkout, name='document_new'),
+    url('/documents', views.documents, name='documents'),
+    url('/books/', views.books, name='books'),
+    url('/articles/', views.articles, name='articles'),
+    url('^document/(?P<document_id>\d+)/$',views.do_checkout, name='checkout-detail'),
 ]

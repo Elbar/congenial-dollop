@@ -8,3 +8,8 @@ class DocumentForm(forms.ModelForm):
         model = Document
         fields = '__all__'
 
+
+class CheckoutForm(forms.ModelForm):
+    class Meta:
+        model = Checkout
+        fields = '__all__'

@@ -1,0 +1,36 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+    <div class="container">
+    <div class="row col-md-12 custyle">
+        <table class="table table-striped custab">
+            <thead>
+            <a href="{% url 'document_new' %}" class="btn btn-primary btn-xs pull-right"><b>+</b> Add</a>
+            <tr>
+                <th>User name</th>
+                <th>Document title</th>
+                <th>Document type</th>
+                <th>Location</th>
+                <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            {% for checkout in checkouts %}
+                <tr>
+                    <td>{{ checkout.user.first_name }} {{ checkout.user.last_name }}</td>
+                    <td>{{ checkout.document.title }}</td>
+                    <td>{{ checkout.document.get_cname}}</td>
+                    <td>{{ checkout.document.release }}</td>
+                    <td class="text-center">
+                        {% if queryset == 'Librarian' %}
+                            <a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                            <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>
+                                Del</a></td>
+                        {% elif queryset == 'Patron' %}
+                            <a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Checkout</a>
+                        {% endif %}
+
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

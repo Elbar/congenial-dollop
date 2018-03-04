@@ -1,13 +1,12 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Title: {{ book.title }}</h1>
+    {% if is_checked %}
+        <h1>Checked successfully!</h1>
+        <h2>Title: {{ document.title }}</h2>
+        <h2>Author: {{ document.author }}</h2>
+    {% else %}
+        <h1>You already checked out this document</h1>
+    {% endif %}
 
-  <p><strong>Author:</strong> {{ book.author }}</p> <!-- author detail link not yet defined -->
-  <p><strong>Release:</strong> {{ book.release }}</p>
-  <p><strong>ISBN:</strong> {{ book.isbn }}</p>
-  <p><strong>Edition:</strong> {{ book.edition }}</p>
-      {% if user.is_authenticated and is_librarian %}
-          <p><strong>Checked out by:</strong> {{ checkout.user.first_name }} {{ checkout.user.last_name }}</p>
-      {% endif %}
 {% endblock %}

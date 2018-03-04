@@ -1,0 +1,39 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row col-md-12 custyle">
+        <table class="table table-striped custab">
+            <thead>
+            <a href="{% url 'document_new' %}" class="btn btn-primary btn-xs pull-right"><b>+</b> Add</a>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Edition</th>
+                <th>Release</th>
+                <th>Available copies</th>
+                <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            {% for document in documents %}
+                <tr>
+                    <td>{{ document.title }}</td>
+                    <td>{{ document.author }}</td>
+                    <td>{{ document.edition }}</td>
+                    <td>{{ document.release }}</td>
+                    <td>{{ document.numberOfCopies }}</td>
+                    <td class="text-center">
+                        {% if queryset == 'Librarian' %}
+                            <a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                            <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>
+                                Del</a></td>
+                        {% elif queryset == 'Patron' %}
+                            <a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Checkout</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
