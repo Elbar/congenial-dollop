@@ -23,7 +23,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    url('', include('catalog.urls')),
+    url('catalog', include('catalog.urls')),
     url('', include('django.contrib.auth.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

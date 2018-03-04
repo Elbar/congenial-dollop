@@ -2,6 +2,8 @@ from django.http import Http404
 from django.shortcuts import render
 from django.views import generic
 from .models import Book, Checkout, Document
+from .forms import DocumentForm
+from django.shortcuts import redirect
 from account.models import User, Patron, Librarian
 
 
@@ -39,3 +41,12 @@ def book_detail_view(request, pk):
         context={'book': book_id, 'checkout': checkout, 'is_librarian': is_librarian}
     )
 
+
+def create_document(request):
+    if request.method == "POST":
+        form = DocumentForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+    else:
+        form = DocumentForm()
+    return render(request, 'catalog/document_edit.html', {'form': form})

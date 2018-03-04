@@ -1,11 +1,8 @@
+from datetime import datetime, timedelta
+
 from django.db import models
-from django.urls import reverse
 
 from account.models import User, Faculty
-import uuid # Required for unique book instances
-
-from datetime import datetime, timedelta
-# Create your models here.
 
 
 class Document(models.Model):
